@@ -1,0 +1,116 @@
+import streamlit as st  
+import plotly.graph_objects as go
+import numpy as np
+
+from astroquery.jplhorizons import Horizons
+
+#st. set_page_config(layout="wide")
+
+
+#Dates
+Dates_short = {'start': '2020-01-01',
+               'stop' : '2022-01-01',
+               'step': '10d'}
+Dates_long = {'start': '1750-01-01',
+               'stop' : '2099-01-01',
+               'step' :'30d'}
+
+#Planets
+Mercury = Horizons(id=199,location="@0",epochs= Dates_short)
+Venus = Horizons(id=299,location="@0",epochs= Dates_short)
+Earth = Horizons(id=399,location="@0",epochs= Dates_short)
+Mars = Horizons(id=499,location="@0",epochs= Dates_short)
+Jupiter = Horizons(id=599,location="@0",epochs= Dates_long)
+Saturn = Horizons(id=699,location="@0",epochs= Dates_long)
+Uranus = Horizons(id=799,location="@0",epochs= Dates_long)
+Neptune = Horizons(id=899,location="@0",epochs= Dates_long)
+
+#Small bodies
+Pluto = Horizons(id=999,location="@0",epochs= Dates_long)
+Quaoar = Horizons(id= 'Quaoar',location="@0",epochs= Dates_long)
+Haumea = Horizons(id='Haumea',location="@0",epochs= Dates_long)
+Makemake = Horizons(id='Makemake',location="@0",epochs= Dates_long)
+
+#Planets
+Mercury_vec = Mercury.vectors
+Venus_vec = Venus.vectors
+Earth_vec = Earth.vectors
+Mars_vec = Mars.vectors
+Jupiter_vec = Jupiter.vectors
+Saturn_vec = Saturn.vectors
+Uranus_vec = Uranus.vectors
+Neptune_vec = Neptune.vectors
+
+
+
+orbits = {'Sun':[0,0,0],
+    'Mercury': Mercury_vec,
+            'Venus' : Venus_vec,
+            'Earth' : Earth_vec,
+            'Mars' : Mars_vec,
+            'Jupiter' : Jupiter_vec,
+            'Saturn' : Saturn_vec,
+            'Uranus' : Uranus_vec,
+            'Neptune' : Neptune_vec,             
+             }
+# Create a figure with a 3D scatter plot for each planet  
+fig = go.Figure()  
+
+
+# Add each planet's orbit as a line  
+for planet, orbit in orbits.items():  
+    if planet != 'Sun':
+        fig.add_trace(go.Scatter3d(  
+            x=orbit()['x'].value,  
+            y=orbit()['y'].value,
+            z=orbit()['z'].value,
+            mode='lines',  
+            line=dict(  
+                color='blue',  
+                width=2  
+            ),  
+            name=planet + ' Orbit'  
+        ))  
+
+# Add each planet's position as a marker  
+for planet, orbit in orbits.items(): 
+    if planet == 'Sun':
+        fig.add_trace(go.Scatter3d(  
+        x=[orbit[0]], 
+        y=[orbit[1]],
+        z=[orbit[2]],
+        mode='markers',  
+        marker=dict(  
+            size=20,  
+            color='Orange'  
+        ),  
+        name=planet  
+            ))
+    else:
+        fig.add_trace(go.Scatter3d(  
+            x=[orbit()['x'].value[0]], 
+            y=[orbit()['y'].value[0]],
+            z=[orbit()['z'].value[0]],
+            mode='markers',  
+            marker=dict(  
+                size=5,  
+                color='red'  
+            ),  
+            name=planet  
+        ))
+  
+# Customize the plot title and axis labels  
+fig.update_layout(  
+   title='Solar System 3D Graph',  
+    width=None,
+    height=1000,
+   scene=dict(  
+      xaxis_title='X',  
+      yaxis_title='Y',  
+      zaxis_title='Z'  
+   )  
+)  
+
+  
+# Display the plot in the Streamlit app  
+st.plotly_chart(fig, use_container_width=True)
