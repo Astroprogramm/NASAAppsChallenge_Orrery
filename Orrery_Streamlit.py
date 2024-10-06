@@ -3,6 +3,7 @@ import plotly.graph_objects as go
 import numpy as np
 import base64
 from astroquery.jplhorizons import Horizons
+import time
 
 st.set_page_config(layout="wide")
 
@@ -77,8 +78,39 @@ Saturn_vec = Saturn.vectors
 Uranus_vec = Uranus.vectors
 Neptune_vec = Neptune.vectors
 
+#Small bodies
+Pluto_vec = Pluto.vectors
+Quaoar_vec = Quaoar.vectors
+Haumea_vec = Haumea.vectors
+Makemake_vec = Makemake.vectors
 
 
+
+with st.sidebar:
+
+    st.title('Customize the plot!:')
+
+    st.checkbox('View real sizes', key='real_sizes')
+    st.checkbox('Toogle labels', key='labels')
+
+
+st.title('Welcome to the interactive Orrery!')
+st.subheader('Discover the wonders of our Solar System through this engaging interactive virtual model, where you can uncover intriguing details about each celestial body!')
+#Sizes:
+if not st.session_state.real_sizes:
+    Sizes = np.array([140000, 4879,12104,12756,6792,142984,120536,51118,49528,2376])/10000
+else:
+    Sizes = np.array([1400000, 4879,12104,12756,6792,142984,120536,51118,49528,2376])/149597871
+
+if not st.session_state.labels:
+    mode_plot = 'lines+markers+text'
+else:
+    mode_plot = 'markers'
+
+#Colors:
+colors = ['orange','#a9a9a9', '#966919', 'darkblue', 'red', '#D27D2D','#C19A6B','cyan','blue']
+
+Sizes = Sizes.tolist()
 orbits = {'Sun':[0,0,0],
     'Mercury': Mercury_vec,
             'Venus' : Venus_vec,
@@ -89,12 +121,18 @@ orbits = {'Sun':[0,0,0],
             'Uranus' : Uranus_vec,
             'Neptune' : Neptune_vec,             
              }
+
+#with st.empty():
+#    for seconds in range(1):
+#        with st.spinner("Loading..."):
+#            time.sleep(5)
+
 # Create a figure with a 3D scatter plot for each planet  
 fig = go.Figure()  
 
-
+counter=1
 # Add each planet's orbit as a line  
-for planet, orbit in orbits.items():  
+for planet, orbit in orbits.items(): 
     if planet != 'Sun':
         fig.add_trace(go.Scatter3d(  
             x=orbit()['x'].value,  
@@ -102,12 +140,14 @@ for planet, orbit in orbits.items():
             z=orbit()['z'].value,
             mode='lines',  
             line=dict(  
-                color='blue',  
+                color=colors[counter],  
                 width=2  
             ),  
             name=planet + ' Orbit'  
         ))  
+        counter+=1
 
+counter = 0
 # Add each planet's position as a marker  
 for planet, orbit in orbits.items(): 
     if planet == 'Sun':
@@ -115,31 +155,35 @@ for planet, orbit in orbits.items():
         x=[orbit[0]], 
         y=[orbit[1]],
         z=[orbit[2]],
-        mode='markers',  
+        mode=mode_plot, 
         marker=dict(  
-            size=20,  
-            color='Orange'  
+            size=Sizes[counter],  
+            color=colors[counter]
         ),  
-        name=planet  
+        name=planet,
+        text='Sun'
             ))
+        counter+=1
     else:
         fig.add_trace(go.Scatter3d(  
             x=[orbit()['x'].value[0]], 
             y=[orbit()['y'].value[0]],
             z=[orbit()['z'].value[0]],
-            mode='markers',  
+            mode=mode_plot, 
             marker=dict(  
-                size=5,  
-                color='red'  
+                size=Sizes[counter],  
+                color=colors[counter]  
             ),  
-            name=planet  
+            name=planet,
+            text=planet,
         ))
+        counter+=1
   
 # Customize the plot title and axis labels  
 fig.update_layout(  
    #title='Solar System 3D Graph',  
     #width=1000,
-    height=800,
+    height=1100,
    scene=dict(  
     xaxis_title='X',  
     yaxis_title='Y',  
@@ -148,8 +192,14 @@ fig.update_layout(
     yaxis = dict(visible=False),
     zaxis =dict(visible=False),
    ),
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor='rgba(0,0,0,0)'
+    paper_bgcolor='rgba(0,0,0,0.3)',
+    plot_bgcolor='rgba(0,0,0,0.3)',
+    font=dict(
+    family="Arial",
+    size=15,
+    color="white"
+    ),
+    legend_font_size=20
 )  
 
   
