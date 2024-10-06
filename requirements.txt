@@ -1,3 +1,5 @@
 plotly
 streamlit
 numpy
+astroquery
+base64
