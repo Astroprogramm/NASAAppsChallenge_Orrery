@@ -35,8 +35,15 @@ background: rgba(0,0,0,0);
 """
 
 st.markdown(page_bg_img, unsafe_allow_html=True)
+st.markdown(
+f"""
+<iframe src="http://localhost:8501/media/a318c54acdc8fc15e8c9d8b88543ed17be024d690c61c9d1c0819043.mp3" frameborder="0" width="20%" height="20" autoplay="true" loop = "true"
+allowtransparency="true" style="background: red;" ></iframe>  
+""", unsafe_allow_html=True)
+
 #background-image: url("data:image/png;base64,{img}");
 #background-image: url("https://images.unsplash.com/photo-1641357445458-5540762f0cab?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+
 
 #Dates
 Dates_short = {'start': '2020-01-01',
@@ -134,7 +141,7 @@ for planet, orbit in orbits.items():
 fig.update_layout(  
    #title='Solar System 3D Graph',  
     #width=1000,
-    height=1000,
+    height=800,
    scene=dict(  
     xaxis_title='X',  
     yaxis_title='Y',  
@@ -149,6 +156,10 @@ fig.update_layout(
 
   
 # Display the plot in the Streamlit app  
-st.plotly_chart(fig,use_container_width = True, filename='transparent-background')
+st.plotly_chart(fig, filename='transparent-background')
 
-st.write('Photo by <a href="https://unsplash.com/@olenkasergienko?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Olena Bohovyk</a> on <a href="https://unsplash.com/photos/stars-in-the-sky-during-night-time-Cq5NaI0yKBE?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>')
+
+st.write('''Song: North Edge
+License: Creative Commons (CC BY 3.0) https://creativecommons.org/licenses/by/3.0
+https://www.youtube.com/c/keysofmoonmusic
+Music powered by BreakingCopyright: https://breakingcopyright.com''')
