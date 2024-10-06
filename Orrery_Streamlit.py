@@ -157,7 +157,7 @@ fig.update_layout(
 st.plotly_chart(fig, filename='transparent-background')
 
 
-st.audio("Music/North Edge.mp3", format="audio/mpeg", loop=True, autoplay=True,)
+st.audio("Music/North Edge.mp3", format="audio/mp3", loop=True, autoplay=True,)
 st.write('''Song: North Edge
 License: Creative Commons (CC BY 3.0) https://creativecommons.org/licenses/by/3.0
 https://www.youtube.com/c/keysofmoonmusic
