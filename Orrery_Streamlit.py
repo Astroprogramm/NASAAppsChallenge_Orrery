@@ -1,11 +1,42 @@
 import streamlit as st  
 import plotly.graph_objects as go
 import numpy as np
-
+import base64
 from astroquery.jplhorizons import Horizons
 
-#st. set_page_config(layout="wide")
+st. set_page_config(layout="wide")
 
+# Load background image
+background_image_path = "Images/JWT_star_formation.jpg"
+import base64
+
+def get_img_as_base64(file):
+    with open(file, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+
+img = get_img_as_base64(background_image_path)
+
+page_bg_img = f"""
+<style>
+[data-testid="stAppViewContainer"] > .main {{
+background-image: url("data:image/png;base64,{img}");
+background-size: cover;
+background-position: top left;
+background-repeat: no-repeat;
+background-attachment: local;
+}}
+[data-testid="stHeader"] {{
+background: rgba(0,0,0,0);
+}}
+
+</style>
+"""
+
+st.markdown(page_bg_img, unsafe_allow_html=True)
+#background-image: url("data:image/png;base64,{img}");
+#background-image: url("https://images.unsplash.com/photo-1641357445458-5540762f0cab?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
 
 #Dates
 Dates_short = {'start': '2020-01-01',
@@ -101,16 +132,23 @@ for planet, orbit in orbits.items():
   
 # Customize the plot title and axis labels  
 fig.update_layout(  
-   title='Solar System 3D Graph',  
-    width=None,
+   #title='Solar System 3D Graph',  
+    #width=1000,
     height=1000,
    scene=dict(  
-      xaxis_title='X',  
-      yaxis_title='Y',  
-      zaxis_title='Z'  
-   )  
+    xaxis_title='X',  
+    yaxis_title='Y',  
+    zaxis_title='Z',
+    xaxis = dict(visible=False),
+    yaxis = dict(visible=False),
+    zaxis =dict(visible=False),
+   ),
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)'
 )  
 
   
 # Display the plot in the Streamlit app  
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig,use_container_width = True, filename='transparent-background')
+
+st.write('Photo by <a href="https://unsplash.com/@olenkasergienko?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Olena Bohovyk</a> on <a href="https://unsplash.com/photos/stars-in-the-sky-during-night-time-Cq5NaI0yKBE?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>')
