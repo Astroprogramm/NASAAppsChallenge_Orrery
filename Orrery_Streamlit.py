@@ -4,7 +4,7 @@ import numpy as np
 import base64
 from astroquery.jplhorizons import Horizons
 
-st. set_page_config(layout="wide")
+st.set_page_config(layout="wide")
 
 # Load background image
 background_image_path = "Images/JWT_star_formation.jpg"
@@ -20,7 +20,7 @@ img = get_img_as_base64(background_image_path)
 
 page_bg_img = f"""
 <style>
-[data-testid="stAppViewContainer"] > .main {{
+[data-testid="stAppViewContainer"] {{
 background-image: url("data:image/png;base64,{img}");
 background-size: cover;
 background-position: top left;
@@ -35,11 +35,18 @@ background: rgba(0,0,0,0);
 """
 
 st.markdown(page_bg_img, unsafe_allow_html=True)
-st.markdown(
-f"""
-<iframe src="http://localhost:8501/media/a318c54acdc8fc15e8c9d8b88543ed17be024d690c61c9d1c0819043.mp3" frameborder="0" width="20%" height="20" autoplay="true" loop = "true"
-allowtransparency="true" style="background: red;" ></iframe>  
+#st.markdown(
+#f"""
+#<iframe src="Music/North Edge.mp3" frameborder="0" width="20%" height="50" autoplay="true" loop = "true;" ></iframe>  
+#""", unsafe_allow_html=True)
+
+st.markdown(f"""
+<audio src="http://localhost:8501/media/a318c54acdc8fc15e8c9d8b88543ed17be024d690c61c9d1c0819043.mp3" controls autoplay loop width="20%">
+  Your browser does not support the audio element.
+</audio>
 """, unsafe_allow_html=True)
+
+
 
 #background-image: url("data:image/png;base64,{img}");
 #background-image: url("https://images.unsplash.com/photo-1641357445458-5540762f0cab?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
@@ -159,6 +166,7 @@ fig.update_layout(
 st.plotly_chart(fig, filename='transparent-background')
 
 
+st.audio("North Edge.mp3", format="audio/mpeg", loop=True, autoplay=True)
 st.write('''Song: North Edge
 License: Creative Commons (CC BY 3.0) https://creativecommons.org/licenses/by/3.0
 https://www.youtube.com/c/keysofmoonmusic
