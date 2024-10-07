@@ -46,12 +46,15 @@ HTML: A markup language for customizing the Streamlit interface
 
 Yes, I utilized Ninja Tech AI to assist in preparing my project. Specifically, I used it to generate the initial plot after obtaining data from astroquery, to modify some visuals on my app, and to help craft a clear and engaging project description, ensuring a professional and polished presentation of my work.
 
-### Space Agency Data
+###### Space Agency Data
 
 - [NASA Sun Facts](https://science.nasa.gov/sun/facts/)
 - [NASA Planetary factsheet](https://nssdc.gsfc.nasa.gov/planetary/factsheet/)
 - [Astroquery, NASA JPL](https://astroquery.readthedocs.io/en/latest/jplhorizons/jplhorizons.html#overview)
-- [Background image: Early Universe Crackled With Bursts of Star Formation](https://www.flickr.com/photos/nasawebbtelescope/52952930671/in/album-72177720305127361)
+- [JWST Background image: Early Universe Crackled With Bursts of Star Formation](https://www.flickr.com/photos/nasawebbtelescope/52952930671/in/album-72177720305127361)
+- [Pluto Factsheet NASA](https://nssdc.gsfc.nasa.gov/planetary/factsheet/plutofact.html)
+- [Planet Sizes and Locations in Our Solar System](https://science.nasa.gov/solar-system/planet-sizes-and-locations-in-our-solar-system/)
+- [Quaoar](https://science.nasa.gov/resource/quaoar/)
 
 ### References
 
@@ -59,9 +62,7 @@ Yes, I utilized Ninja Tech AI to assist in preparing my project. Specifically, I
 - [Library Open3d](https://www.open3d.org/docs/release/index.html)
 - [Colors of the planets](https://www.arclab.com/en/kb/htmlcss/html-css-color-names-rgb-rgba-hex-hsl-hsla.html)
 - [Streamlit forums](https://discuss.streamlit.io/)
-- [Soundtrack music](https://www.youtube.com/watch?v=smWb8dj1Jgs)
-- [html colors](https://www.arclab.com/en/kb/htmlcss/html-css-color-names-rgb-rgba-hex-hsl-hsla.html)
-
-
+- [Background music: "North Edge" by Keys Of Moon](https://www.youtube.com/watch?v=smWb8dj1Jgs)
+- [Html colors](https://www.arclab.com/en/kb/htmlcss/html-css-color-names-rgb-rgba-hex-hsl-hsla.html)
 
 ## 
