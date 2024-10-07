@@ -156,10 +156,12 @@ orbits = {'Sun':[0,0,0],
             'Makemake':Makemake_vec,
              }
 Descriptions = {
-            'Sun':'The Sun is the star at the heart of our solar system. Its gravity holds the solar system together, keeping everything — from the biggest planets to the smallest bits of debris — in its orbit.',
-            'Mercury': '''Mercury is the smallest planet in our solar system and the nearest to the Sun.''',
-            #Mercury is only slightly larger than Earth's Moon. Its surface is covered in tens of thousands of impact craters. Despite its proximity to the Sun, Mercury is not the hottest planet in our solar system – that title belongs to nearby Venus, thanks to its dense atmosphere. But Mercury is the fastest planet, zipping around the Sun every 88 Earth days.''',
-            'Venus' : '',
+            'Sun':'The Sun is the star at the heart of our solar system.<br>Its gravity holds the solar system together, keeping everything<br>-from the biggest planets to the smallest bits of debris — in its orbit.',
+            'Mercury': '''Mercury is the smallest planet in our solar system and the nearest to the Sun.<br>
+Mercury is only slightly larger than Earth's Moon. Its surface is covered in tens of thousands of impact craters.<br>
+Despite its proximity to the Sun, Mercury is not the hottest planet in our solar system - that title belongs to nearby Venus, thanks to its dense atmosphere.<br>
+But Mercury is the fastest planet, zipping around the Sun every 88 Earth days.''',
+            'Venus' : "Venus is the second planet from the Sun,<br>and Earth's closest planetary neighbor.<br>Venus is the third brightest object in the sky<br>after the Sun and Moon.<br>Venus spins slowly in the opposite direction from most planets.<br>Venus is similar in structure and size to Earth,<br>and is sometimes called Earth's evil twin.",
             'Earth' : '',
             'Mars' : '',
             'Jupiter' : '',
