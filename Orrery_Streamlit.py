@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 import numpy as np
 import base64
 from astroquery.jplhorizons import Horizons
-import time
+import datetime
 
 st.set_page_config(layout="wide")
 
@@ -37,21 +37,34 @@ background: rgba(0,0,0,0);
 
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
-#st.markdown(f"""
-#<audio src="http://localhost:8501/media/a318c54acdc8fc15e8c9d8b88543ed17be024d690c61c9d1c0819043.mp3" controls autoplay loop width="20%">
-#  Your browser does not support the audio element.
-#</audio>
-#""", unsafe_allow_html=True)
 
+with st.sidebar:
+
+    st.subheader(':red[Design Your Cosmic Canvas] ✨')
+
+    start_date = st.date_input(':orange[Start date first]', datetime.date(2020, 1, 1), min_value=datetime.date(1800,1,1))
+    end_date = st.date_input(':orange[End date]', datetime.date(2024, 1, 1))
+    st.text(' ')
+
+    st.write('')
+    multiplier = st.slider(":orange[Change the size of the celestial bodies:]", 1, 20, 1)
+    st.write(':red[Other options:]')
+    st.checkbox(':orange[View real sizes]', key='real_sizes')
+    st.checkbox(':orange[Toogle labels (on/off)]', key='labels')
+    st.write('')
 
 #Dates
-Dates_short = {'start': '2020-01-01',
-               'stop' : '2022-01-01',
+Dates_short = {'start': str(start_date),
+               'stop' : str(end_date),
                'step': '10d'}
-Dates_long = {'start': '1750-01-01',
-               'stop' : '2099-01-01',
-               'step' :'30d'}
 
+Dates_long = {'start': '1801-01-01',
+               'stop' : '2029-01-01',
+               'step' :'30d'}
+Dates_long_2000s = {'start': '2001-01-01',
+               'stop' : '2029-01-01',
+               'step' :'30d'}
+#------------Loading Data:--------------
 #Planets
 Mercury = Horizons(id=199,location="@0",epochs= Dates_short)
 Venus = Horizons(id=299,location="@0",epochs= Dates_short)
@@ -64,9 +77,9 @@ Neptune = Horizons(id=899,location="@0",epochs= Dates_long)
 
 #Small bodies
 Pluto = Horizons(id=999,location="@0",epochs= Dates_long)
-Quaoar = Horizons(id= 'Quaoar',location="@0",epochs= Dates_long)
-Haumea = Horizons(id='Haumea',location="@0",epochs= Dates_long)
-Makemake = Horizons(id='Makemake',location="@0",epochs= Dates_long)
+Quaoar = Horizons(id= 'Quaoar I',location="@0",epochs= Dates_long_2000s)
+Haumea = Horizons(id='Haumea (system barycenter)',location="@0",epochs= Dates_long_2000s)
+Makemake = Horizons(id='Makemake',location="@0",epochs= Dates_long_2000s)
 
 #Planets
 Mercury_vec = Mercury.vectors
@@ -85,22 +98,39 @@ Haumea_vec = Haumea.vectors
 Makemake_vec = Makemake.vectors
 
 
-
-with st.sidebar:
-
-    st.title('Customize the plot!:')
-
-    st.checkbox('View real sizes', key='real_sizes')
-    st.checkbox('Toogle labels', key='labels')
+#------------ App --------------
 
 
-st.title('Welcome to the interactive Orrery!')
-st.subheader('Discover the wonders of our Solar System through this engaging interactive virtual model, where you can uncover intriguing details about each celestial body!')
+cols= st.columns([0.6,0.05,0.45])
+with cols[0]:
+    st.title(':red[Welcome to SkySphere!]')
+    st.markdown('''<div>
+                <span style="font-size: 22px; font-weight: bold">About</span>
+                </div>''', unsafe_allow_html=True)
+    st.markdown('''<div>
+                <span style="font-size: 20px;">Discover the wonders of our Solar System through
+                this engaging interactive virtual model, where you can uncover 
+                intriguing details about each celestial body!</span>
+                </div>''', unsafe_allow_html=True)
+
+
+with cols[2]:
+    st.title(' ')
+    st.text(' ')
+    st.audio("Music/North Edge.mp3", format="audio/mp3", loop=True, autoplay=True,)
+    st.markdown('''<div>
+            <span style="font-size: 12px;">Song: North Edge
+    License: Creative Commons (CC BY 3.0) <a href="https://creativecommons.org/licenses/by/3.0">Creative commons</a>
+    <a href="https://www.youtube.com/c/keysofmoonmusic">keysofmoonmusic</a>
+    Music powered by BreakingCopyright: <a href="https://breakingcopyright.com">Breakingcopyright.com<a/></span>
+            </div>''', unsafe_allow_html=True)
+
+
 #Sizes:
 if not st.session_state.real_sizes:
-    Sizes = np.array([140000, 4879,12104,12756,6792,142984,120536,51118,49528,2376])/10000
+    Sizes = np.array([190000, 4879,12104,12756,6792,142984,120536,51118,49528,2376,1188*2,1100,1740,1434])*multiplier/20000
 else:
-    Sizes = np.array([1400000, 4879,12104,12756,6792,142984,120536,51118,49528,2376])/149597871
+    Sizes = np.array([1400000, 4879,12104,12756,6792,142984,120536,51118,49528,2376,1188*2,1100,1740,1434])/149597871
 
 if not st.session_state.labels:
     mode_plot = 'lines+markers+text'
@@ -108,7 +138,7 @@ else:
     mode_plot = 'markers'
 
 #Colors:
-colors = ['orange','#a9a9a9', '#966919', 'darkblue', 'red', '#D27D2D','#C19A6B','cyan','blue']
+colors = ['orange','#a9a9a9', '#966919', 'darkblue', 'red', '#D27D2D','#C19A6B','cyan','blue','#f5f5dc','#deb887','#ffe4c4','#fffacd']
 
 Sizes = Sizes.tolist()
 orbits = {'Sun':[0,0,0],
@@ -119,9 +149,29 @@ orbits = {'Sun':[0,0,0],
             'Jupiter' : Jupiter_vec,
             'Saturn' : Saturn_vec,
             'Uranus' : Uranus_vec,
-            'Neptune' : Neptune_vec,             
+            'Neptune' : Neptune_vec,
+            'Pluto':Pluto_vec,
+            'Quaoar':Quaoar_vec,
+            'Haumea':Haumea_vec,
+            'Makemake':Makemake_vec,
              }
+Descriptions = {
+            'Sun':'The Sun is the star at the heart of our solar system. Its gravity holds the solar system together, keeping everything — from the biggest planets to the smallest bits of debris — in its orbit.',
+            'Mercury': '''Mercury is the smallest planet in our solar system and the nearest to the Sun.''',
+            #Mercury is only slightly larger than Earth's Moon. Its surface is covered in tens of thousands of impact craters. Despite its proximity to the Sun, Mercury is not the hottest planet in our solar system – that title belongs to nearby Venus, thanks to its dense atmosphere. But Mercury is the fastest planet, zipping around the Sun every 88 Earth days.''',
+            'Venus' : '',
+            'Earth' : '',
+            'Mars' : '',
+            'Jupiter' : '',
+            'Saturn' : '',
+            'Uranus' : '',
+            'Neptune' : '',
+            'Pluto':'',
+            'Quaoar':'',
+            'Haumea':'',
+            'Makemake':'',
 
+}
 #with st.empty():
 #    for seconds in range(1):
 #        with st.spinner("Loading..."):
@@ -133,6 +183,7 @@ fig = go.Figure()
 counter=1
 # Add each planet's orbit as a line  
 for planet, orbit in orbits.items(): 
+    
     if planet != 'Sun':
         fig.add_trace(go.Scatter3d(  
             x=orbit()['x'].value,  
@@ -143,7 +194,10 @@ for planet, orbit in orbits.items():
                 color=colors[counter],  
                 width=2  
             ),  
-            name=planet + ' Orbit'  
+            name=planet + ' Orbit',
+            
+            hovertemplate=    ' ',
+
         ))  
         counter+=1
 
@@ -161,7 +215,8 @@ for planet, orbit in orbits.items():
             color=colors[counter]
         ),  
         name=planet,
-        text='Sun'
+        text='Sun',
+        hovertemplate=    ' ',
             ))
         counter+=1
     else:
@@ -175,7 +230,10 @@ for planet, orbit in orbits.items():
                 color=colors[counter]  
             ),  
             name=planet,
-            text=planet,
+            text=planet,            
+            hovertemplate=f'''<b> </b><br>{Descriptions[planet]}<br>'''
+
+            
         ))
         counter+=1
   
@@ -183,7 +241,7 @@ for planet, orbit in orbits.items():
 fig.update_layout(  
    #title='Solar System 3D Graph',  
     #width=1000,
-    height=1100,
+    height=1200,
    scene=dict(  
     xaxis_title='X',  
     yaxis_title='Y',  
@@ -202,13 +260,4 @@ fig.update_layout(
     legend_font_size=20
 )  
 
-  
-# Display the plot in the Streamlit app  
 st.plotly_chart(fig, filename='transparent-background')
-
-
-st.audio("Music/North Edge.mp3", format="audio/mp3", loop=True, autoplay=True,)
-st.write('''Song: North Edge
-License: Creative Commons (CC BY 3.0) https://creativecommons.org/licenses/by/3.0
-https://www.youtube.com/c/keysofmoonmusic
-Music powered by BreakingCopyright: https://breakingcopyright.com''')

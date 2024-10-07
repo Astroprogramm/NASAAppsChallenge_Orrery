@@ -1,2 +1,9 @@
-1. https://www.youtube.com/watch?v=pyWqw5yCNdo
-2. Early Universe Crackled With Bursts of Star Formation, Webb Shows: https://www.flickr.com/photos/nasawebbtelescope/52952930671/in/album-72177720305127361
+1. https://www.open3d.org/docs/release/index.html
+2. https://www.youtube.com/watch?v=pyWqw5yCNdo
+3. Early Universe Crackled With Bursts of Star Formation, Webb Shows: https://www.flickr.com/photos/nasawebbtelescope/52952930671/in/album-72177720305127361
+4. https://science.nasa.gov/sun/facts/
+5. https://nssdc.gsfc.nasa.gov/planetary/factsheet/s
+6. https://www.skyatnightmagazine.com/space-science/colours-solar-system-planets
+7. https://www.arclab.com/en/kb/htmlcss/html-css-color-names-rgb-rgba-hex-hsl-hsla.html
+8. https://discuss.streamlit.io/
+9. https://astroquery.readthedocs.io/en/latest/jplhorizons/jplhorizons.html#overview
