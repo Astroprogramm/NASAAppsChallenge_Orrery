@@ -57,6 +57,9 @@ Yes, I utilized Ninja Tech AI to assist in preparing my project. Specifically, I
 - [Pluto Factsheet NASA](https://nssdc.gsfc.nasa.gov/planetary/factsheet/plutofact.html)
 - [Planet Sizes and Locations in Our Solar System](https://science.nasa.gov/solar-system/planet-sizes-and-locations-in-our-solar-system/)
 - [Quaoar](https://science.nasa.gov/resource/quaoar/)
+- [NASA Solar System Exploration Database](https://solarsystem.nasa.gov)
+- [IAU Minor Planet Center (MPC)](https://minorplanetcenter.net)
+- [Caltech Division of Geological and Planetary Sciences](https://caltech.edu)
 
 ### References
 
@@ -66,5 +69,4 @@ Yes, I utilized Ninja Tech AI to assist in preparing my project. Specifically, I
 - [Streamlit forums](https://discuss.streamlit.io/)
 - [Background music: "North Edge" by Keys Of Moon](https://www.youtube.com/watch?v=smWb8dj1Jgs)
 - [Html colors](https://www.arclab.com/en/kb/htmlcss/html-css-color-names-rgb-rgba-hex-hsl-hsla.html)
-
-## 
+- [BBC Sky at Night Magazine - Planet Colors](https://www.skyatnightmagazine.com/space-science/colours-solar-system-planets)
