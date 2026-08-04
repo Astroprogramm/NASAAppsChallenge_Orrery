@@ -1,4 +1,4 @@
-plotly
-streamlit
-numpy
-astroquery
+plotly==5.24.1
+streamlit==1.60.0
+numpy==1.24.1
+astroquery==0.4.7

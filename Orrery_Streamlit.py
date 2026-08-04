@@ -267,4 +267,6 @@ fig.update_layout(
     legend_font_size=20
 )  
 
-st.plotly_chart(fig, filename='transparent-background')
+st.plotly_chart(fig)
+
+
