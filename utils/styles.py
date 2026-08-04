@@ -29,6 +29,42 @@ background: rgba(0,0,0,0);
 </style>
 """
 
+on_boarding_style = """
+        <style>
+            /* Completely hide structural UI components to lock user focus */
+            [data-testid="stSidebar"] { display: none !important; }
+            [data-testid="stHeader"] { display: none !important; }
+            
+            /* 1. BUTTON CONTAINER: Applies the neon gradient background, padding, and outer shadows */
+            div.stButton > button {
+                background: linear-gradient(45deg, #8A2387, #E94057, #F27121) !important;
+                border: none !important;
+                padding: 1.2rem 3rem !important; 
+                border-radius: 12px !important;
+                box-shadow: 0 6px 20px rgba(233, 64, 87, 0.5) !important;
+                transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+                cursor: pointer !important;
+            }
+            
+            /* 2. BUTTON TEXT: Forces giant font scaling in solid white, preventing overlapping gradient artifacts */
+            div.stButton > button p, 
+            div.stButton > button span {
+                color: #FFFFFF !important;
+                font-size: 32px !important; /* Clean, high-visibility maximized font size */
+                font-weight: bold !important;
+                background: none !important; /* Clears duplicate background repetitions on child tokens */
+                -webkit-background-clip: unset !important;
+                -webkit-text-fill-color: initial !important;
+            }
+
+            /* 3. HOVER ACTIONS: Smooth micro-interaction feedback when moving the cursor over the element */
+            div.stButton > button:hover {
+                transform: scale(1.03) !important;
+                box-shadow: 0 8px 25px rgba(233, 64, 87, 0.7) !important;
+            }
+
+        </style>
+    """
 
 # --- BALANCED COLOR CONFIGURATION (CSS) ---
 custom_styles = """
@@ -111,6 +147,8 @@ header_styles = """
     </style>
 """
 
+def inject_on_boarding_styles():
+    st.markdown(on_boarding_style, unsafe_allow_html=True)
 
 def inject_custom_styles():
     st.markdown(custom_styles, unsafe_allow_html=True)

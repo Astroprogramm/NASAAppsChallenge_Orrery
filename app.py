@@ -4,7 +4,7 @@ import numpy as np
 import base64
 from astroquery.jplhorizons import Horizons
 import datetime
-from utils.styles import inject_custom_styles, inject_background_image, inject_side_bar_styles, inject_header_styles
+from utils.styles import inject_on_boarding_styles, inject_custom_styles, inject_background_image, inject_side_bar_styles, inject_header_styles
 
 st.set_page_config(layout="wide")
 
@@ -14,6 +14,50 @@ inject_custom_styles()
 inject_side_bar_styles()
 inject_header_styles()
 
+# --- UX AUDIO UNLOCKER & ONBOARDING OVERLAY ---
+if "enter_app" not in st.session_state:
+    st.session_state.enter_app = False
+
+# Show the onboarding card only on the first visit
+if not st.session_state.enter_app:
+    # Custom CSS injectors to isolate viewports and re-skin the standard button token
+    inject_on_boarding_styles()
+    
+    # Onboarding Layout with Neon Gradient Title
+    st.markdown("""
+        <h1 style='text-align: center; font-family: "Helvetica Neue", sans-serif; font-size: 54px; font-weight: bold; background: linear-gradient(45deg, #8A2387, #E94057, #F27121); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 2rem; margin-bottom: 1.5rem;'>
+            SkySphere ✨
+        </h1>
+    """, unsafe_allow_html=True)
+    
+    # Centralized Card Container
+    with st.container(border=True):
+        st.markdown("<h2 style='color: #FFB03B; font-size: 40px;'>🪐 Quick Start Guide</h2>", unsafe_allow_html=True)
+        
+        st.markdown("""
+            <p style='font-size: 30px; line-height: 1.6; color: #FFFFFF;'>
+                Welcome to your interactive 3D Solar System simulator! Follow these quick tips to get started:
+            </p>
+        """, unsafe_allow_html=True)
+        
+        # Core app mechanics detailed via clean bullet points with larger text
+        st.markdown("""
+            <ul style='font-size: 25px; line-height: 1.8; color: #E0E0E0; margin-left: 20px;'>
+                <li style='margin-bottom: 10px;'>📅 <strong style='color: #FFFFFF;'>Timeline Control:</strong> The sidebar displays a <span style='color: #FFB03B;'>4-year planetary path</span> by default. Customize the dates to explore specific alignments or other orbits movements.</li>
+                <li style='margin-bottom: 10px;'>🔍 <strong style='color: #FFFFFF;'>Interactive 3D Map:</strong> Click and drag the orbital graph to rotate your view. Use your scroll wheel to zoom in on inner worlds.</li>
+                <li style='margin-bottom: 10px;'>ℹ️ <strong style='color: #FFFFFF;'>Celestial Data:</strong> Hover your mouse over any planet or marker to unlock interesting scientific data.</li>
+            </ul>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("<p style='font-size: 22px; color: #FFA07A; font-style: italic; margin-top: 1.5rem;'>🎵 Ambient space music will automatically activate upon entry.</p>", unsafe_allow_html=True)
+        st.text("")
+        
+        # High-contrast action button that triggers the browser's audio permissions
+        if st.button("🚀 Launch Simulation", use_container_width=True):
+            st.session_state.enter_app = True
+            st.rerun()
+            
+    st.stop() # Prevents the main app from loading until the user clicks launch
 
 
 # --- SIDEBAR COMPONENT (LEFT PANEL) ---
@@ -23,7 +67,7 @@ with st.sidebar:
     with st.expander("ℹ️ About", expanded=False):
         st.markdown(
             """
-            Welcome to **Cosmic Canvas**, a high-precision interactive 3D 
+            Welcome to **SkySphere**, a interactive 3D 
             simulator engineered to explore our Solar System in real-time.
             
             **Key Features:**
