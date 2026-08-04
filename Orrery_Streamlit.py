@@ -42,8 +42,13 @@ with st.sidebar:
 
     st.subheader(':red[Design Your Cosmic Canvas] ✨')
 
-    start_date = st.date_input(':orange[Start date first]', datetime.date(2020, 1, 1), min_value=datetime.date(1800,1,1))
-    end_date = st.date_input(':orange[End date]', datetime.date(2024, 1, 1))
+    # 1. Definir las fechas dinámicas basadas en el día actual
+    hoy = datetime.date.today()
+    hace_cuatro_anos = hoy - datetime.timedelta(days=1461)
+
+    # 2. Configurar los inputs de Streamlit con los nuevos valores por defecto
+    start_date = st.date_input(':orange[Start date first]', hace_cuatro_anos, min_value=datetime.date(1800, 1, 1))
+    end_date = st.date_input(':orange[End date]', hoy)
     st.text(' ')
 
     st.write('')
