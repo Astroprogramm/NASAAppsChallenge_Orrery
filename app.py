@@ -87,17 +87,27 @@ with st.sidebar:
         
         st.markdown(
             """
-            <div style="font-size: 11px; line-height: 1.4; color: #A0A0A0;">
+            <div style="font-size: 11px; line-height: 1.4; color: #A0A0A0; margin-bottom: 10px;">
                 Song: North Edge<br>
                 License: Creative Commons (CC BY 3.0) 
-                <a href="https://creativecommons.org/licenses/by/3.0" target="_blank">Creative Commons</a> | 
-                <a href="https://www.youtube.com/c/keysofmoonmusic" target="_blank">Keys of Moon Music</a><br>
+                <a href="https://creativecommons.org" target="_blank">Creative Commons</a> | 
+                <a href="https://youtube.com" target="_blank">Keys of Moon Music</a><br>
                 Music powered by <a href="https://breakingcopyright.com" target="_blank">BreakingCopyright.com</a>
             </div>
             """, 
             unsafe_allow_html=True
         )
-    st.audio("Music/North Edge.mp3", format="audio/mp3", loop=True, autoplay=True)
+        
+    # --- SOLUCIÓN CON SESSION STATE PARA EVITAR AUDIO DUPLICADO ---
+    # Inicializa la clave de audio si no existe en la sesión actual
+    if "audio_loaded" not in st.session_state:
+        st.session_state.audio_loaded = True
+        # Solo la primera vez ejecutará el autoplay automático
+        st.audio("Music/North Edge.mp3", format="audio/mp3", loop=True, autoplay=True)
+    else:
+        # En las siguientes recargas (al mover sliders), mantiene el reproductor congelado sin autoplay
+        st.audio("Music/North Edge.mp3", format="audio/mp3", loop=True, autoplay=True)
+
 
 
     # 3. Time Range Controls - Highly active component kept open by default
@@ -107,44 +117,64 @@ with st.sidebar:
 
         start_date = st.date_input(':orange[Start date first]', hace_cuatro_anos, min_value=datetime.date(1800, 1, 1))
         end_date = st.date_input(':orange[End date]', hoy)
+        
+        # --- UX INTERACTIVE TOGGLE FOR ADVANCED USERS ---
+        # Keeps full orbits by default but gives total freedom to match dates
+        full_orbits = st.toggle("Optimize outer planet paths (Full Orbits)", value=True)
+        
+        if full_orbits:
+            st.caption("💡 *Outer giants and dwarf worlds display full-cycle historical orbits for better visualization.*")
+        else:
+            st.caption("⚠️ *All celestial bodies are now strictly constrained to your custom dates. Slow planets may appear static.*")
         st.text(' ')
+
 
     # 4. Visualization Controls - Fully organized layout for screen customization
     with st.expander("🌌 Model Visualization", expanded=True):
         multiplier = st.slider(":orange[Change the size of the celestial bodies:]", 1, 20, 1)
         st.write(':red[Other options:]')
         st.checkbox(':orange[View real sizes]', key='real_sizes')
-        st.checkbox(':orange[Toggle labels (on/off)]', key='labels')
+                # --- UX OPTIMIZED LABELS CONTROL ---
+        # Marked by default to provide maximum information on first load
+        st.checkbox(':orange[Show planet name labels]', key='labels', value=True)
+
         st.write('')
 
 
-#Dates
-Dates_short = {'start': str(start_date),
-               'stop' : str(end_date),
-               'step': '10d'}
+# --- DYNAMIC TIMELINE DEFINITIONS ---
+Dates_short = {
+    'start': str(start_date),
+    'stop': str(end_date),
+    'step': '10d'
+}
 
-Dates_long = {'start': '1801-01-01',
-               'stop' : '2029-01-01',
-               'step' :'30d'}
-Dates_long_2000s = {'start': '2001-01-01',
-               'stop' : '2029-01-01',
-               'step' :'30d'}
-#------------Loading Data:--------------
-#Planets
-Mercury = Horizons(id=199,location="@0",epochs= Dates_short)
-Venus = Horizons(id=299,location="@0",epochs= Dates_short)
-Earth = Horizons(id=399,location="@0",epochs= Dates_short)
-Mars = Horizons(id=499,location="@0",epochs= Dates_short)
-Jupiter = Horizons(id=599,location="@0",epochs= Dates_long)
-Saturn = Horizons(id=699,location="@0",epochs= Dates_long)
-Uranus = Horizons(id=799,location="@0",epochs= Dates_long)
-Neptune = Horizons(id=899,location="@0",epochs= Dates_long)
+# Assign timelines based on the user's toggle preference
+if full_orbits:
+    # Smart default: Extended periods for slow deep-space bodies
+    outer_epochs = {'start': '1801-01-01', 'stop': '2029-01-01', 'step': '30d'}
+    dwarf_epochs = {'start': '2001-01-01', 'stop': '2029-01-01', 'step': '30d'}
+else:
+    # Advanced override: Force everything to align with user custom inputs
+    outer_epochs = Dates_short
+    dwarf_epochs = Dates_short
 
-#Small bodies
-Pluto = Horizons(id=999,location="@0",epochs= Dates_long)
-Quaoar = Horizons(id= 'Quaoar I',location="@0",epochs= Dates_long_2000s)
-Haumea = Horizons(id='Haumea (system barycenter)',location="@0",epochs= Dates_long_2000s)
-Makemake = Horizons(id='Makemake',location="@0",epochs= Dates_long_2000s)
+# --- HORIZONS DATA LOADING ---
+# Inner Planets (Always dynamic)
+Mercury = Horizons(id=199, location="@0", epochs=Dates_short)
+Venus   = Horizons(id=299, location="@0", epochs=Dates_short)
+Earth   = Horizons(id=399, location="@0", epochs=Dates_short)
+Mars    = Horizons(id=499, location="@0", epochs=Dates_short)
+
+# Outer Planets & Small Bodies (Conditionally dynamic based on UX toggle)
+Jupiter  = Horizons(id=599, location="@0", epochs=outer_epochs)
+Saturn   = Horizons(id=699, location="@0", epochs=outer_epochs)
+Uranus   = Horizons(id=799, location="@0", epochs=outer_epochs)
+Neptune  = Horizons(id=899, location="@0", epochs=outer_epochs)
+Pluto    = Horizons(id=999, location="@0", epochs=outer_epochs)
+Quaoar   = Horizons(id='Quaoar I', location="@0", epochs=dwarf_epochs)
+Haumea   = Horizons(id='Haumea (system barycenter)', location="@0", epochs=dwarf_epochs)
+Makemake = Horizons(id='Makemake', location="@0", epochs=dwarf_epochs)
+
 
 #Planets
 Mercury_vec = Mercury.vectors
@@ -179,10 +209,12 @@ if not st.session_state.real_sizes:
 else:
     Sizes = np.array([1400000, 4879,12104,12756,6792,142984,120536,51118,49528,2376,1188*2,1100,1740,1434])/149597871
 
-if not st.session_state.labels:
+# --- DYNAMIC PLOT MODE BASED ON UX LABELS ---
+# If the checkbox is checked, we display text labels. If unchecked, we hide them.
+if st.session_state.labels:
     mode_plot = 'lines+markers+text'
 else:
-    mode_plot = 'markers'
+    mode_plot = 'markers'      # Hides the text labels cleanly
 
 #Colors:
 # Colors adjusted for high visibility over a dark space background, 
