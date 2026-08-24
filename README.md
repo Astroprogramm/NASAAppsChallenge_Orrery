@@ -2,6 +2,8 @@
 
 ![header image, Jupyter](https://science.nasa.gov/wp-content/uploads/2023/06/solar-system-illustration-1920x640-2.jpg?w=1920)
 
+**Visit the app here!: https://virtualorrery-nasa-apps-challenge.streamlit.app/**
+
 ## High-Level Summary
 
 I developed an interactive web page featuring a 3D orrery model of the Solar System, designed to make complex astronomical information accessible and engaging for the general public. The web app offers a user-friendly interface, enhanced with visuals and music, allowing users to explore celestial bodies such as planets, and small bodies. By leveraging modern technology, my project brings the traditional orrery model into the digital age, providing an immersive and educational experience for users. This interactive orrery web app addresses the challenge of making astronomy more approachable and enjoyable for a broader audience, promoting a deeper understanding of our Solar System and its wonders.
